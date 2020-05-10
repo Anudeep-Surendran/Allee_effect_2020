@@ -39,7 +39,7 @@ p=0.2;d=0.4;m=0.1;
 
 %........Numerical parameters...........................
 ximax=16.0;ximax2=12.0;dxi=0.2;
-L=20.0;dt=0.1;t=0.0;tf=100.0;
+L=20.0;dt=0.1;t=0.0;tf=30.0;
 nxi=round((2*ximax)/dxi)+1;nxi2=round((2*ximax2)/dxi)+1;
 
 % Discretisation of displacements between pairs
@@ -91,14 +91,11 @@ function [D2] = D2fn(xif_x,xif_y,z2,z1,xip_x,xip_y,gammad,sigmad,d,ximax,ximax2,
         for i=1:size(xif_x,2)
             fn1=w(xip_x,xip_y,gammad,sigmad,ximax2).*z3(xif_x(i,j),xif_y(i,j),z2,z1,xip_x,xip_y,ximax,dxi);
             fn2=(w(xip_x,xip_y,gammad,sigmad,ximax2).^2).*z3(xif_x(i,j),xif_y(i,j),z2,z1,xip_x,xip_y,ximax,dxi);
-            fn3=(w(xip_x,xip_y,gammad,sigmad,ximax2).^2).*(z3(xif_x(i,j),xif_y(i,j),z2,z1,xip_x,xip_y,ximax,dxi)).^2;
             D2val1=trapz(xip_x(1,:),trapz(xip_y(:,1),fn1));
-            D2val1=(D2val1/z2(loz(xif_x(i,j),xif_y(i,j),ximax,dxi)))^2;
+            D2val1=D2val1/z2(loz(xif_x(i,j),xif_y(i,j),ximax,dxi));
             D2val2=trapz(xip_x(1,:),trapz(xip_y(:,1),fn2));
             D2val2=D2val2/(z2(loz(xif_x(i,j),xif_y(i,j),ximax,dxi)));
-            D2val3=trapz(xip_x(1,:),trapz(xip_y(:,1),fn3));
-            D2val3=D2val3/((z2(loz(xif_x(i,j),xif_y(i,j),ximax,dxi)))^2);
-            D2(i,j)=d+D2val1+D2val2-D2val3+(w(xif_x(i,j),xif_y(i,j),gammad,sigmad,ximax2))^2;        
+            D2(i,j)=d+(D2val1+w(xif_x(i,j),xif_y(i,j),gammad,sigmad,ximax2))^2+D2val2;        
         end
     end
 end
