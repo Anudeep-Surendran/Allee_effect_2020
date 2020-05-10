@@ -13,7 +13,7 @@
 %
 % 1- This script outputs a Matlab data file ('IBM.mat') consisting of the data corresponds to the 
 %    density of individuals as a function of time and pair correlation function (PCFs) 
-%    computed at t=100 as a function of separation distance from IBM.
+%    computed at t=t_final as a function of separation distance from IBM.
 %
 % 2- Change the model parameters below to simulate various cases considered in the article and any other new senarios.
 
